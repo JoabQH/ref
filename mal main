@@ -1,0 +1,17 @@
+  
+      windows.onload = async () => {
+        const msg = document.getElementsById("message");
+        Timesync.init(config, (status) => {
+          msg.textContent = status;
+          setTimeout(() =>
+            try {
+              tizen.application.getCurrentApplicacion().exit();
+            } catch (e) {
+              console.error("No se puede cerrar la app", e);
+            }, 5000);
+        });
+      } catch (e) {
+        msg.textContent = "Error cargando configuracion";
+        console.error(e);
+      }
+  
