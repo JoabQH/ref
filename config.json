@@ -1,0 +1,6 @@
+{
+  "serverUrl": "https://tu-servidor.com/api/getTime",
+  "tlsPort": 443,
+  "forceTls": true,
+  "fallbackTimezone": "UTC+2"
+}
