@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:tizen="http://tizen.org/ns/widgets"
+        id="com.joab.timesync"
+        version="1.0.0"
+        viewmodes="fullscreen">
+
+  <!-- Información básica -->
+  <name>SSSP Time Fixer</name>
+  <description>Corrige la hora automáticamente en pantallas Tizen</description>
+  <icon src="icon.png"/>
+  <content src="index.html"/>
+
+  <!-- Declaración de aplicación -->
+  <tizen:application id="com.joab.timesync"
+                     package="timesync.pkg"
+                     required_version="4.0"
+                     auto-relaunch="true"/>
+
+  <!-- Perfil y configuración -->
+  <tizen:profile name="tv"/>
+  <tizen:setting screen-orientation="landscape"
+                 context-menu="disable"
+                 background-support="enable"
+                 encryption="disable"
+                 install-location="internal-only"
+                 hwkey-event="enable"/>
+
+  <!-- Permitir todas las conexiones -->
+  <access origin="*" subdomains="true"/>
+
+  <!-- Permisos necesarios -->
+  <tizen:privilege name="http://tizen.org/privilege/internet"/>
+  <tizen:privilege name="http://tizen.org/privilege/network.get"/>
+  <tizen:privilege name="http://tizen.org/privilege/time"/>
+  <tizen:privilege name="http://tizen.org/privilege/time.set"/>
+  <tizen:privilege name="http://tizen.org/privilege/application.launch"/>
+  <tizen:privilege name="http://tizen.org/privilege/application.read"/>
+
+  <!-- Compatibilidad con características de TV -->
+  <tizen:feature name="http://tizen.org/feature/screen.size.all"/>
+  <tizen:feature name="http://tizen.org/feature/network.internet"/>
+  <tizen:feature name="http://tizen.org/feature/time.set"/>
+
+</widget>
