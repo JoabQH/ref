@@ -1,0 +1,58 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const message = document.getElementById("message");
+
+  function ajustarHoraConConfig(config) {
+    window.TimeSync.init(config, function (statusMsg) {
+      message.innerHTML = statusMsg;
+
+      config.lastUpdate = new Date().toISOString();
+      LocalStorageManager.saveConfig(config);
+    });
+  }
+
+  // Verifica si hay conexión a internet
+  function hayInternet() {
+    return navigator.onLine;
+  }
+
+  if (hayInternet()) {
+    console.log("Modo online: cargando config.json desde archivo");
+
+    ConfigManager.loadConfig()
+      .then((config) => {
+        ajustarHoraConConfig(config);
+      })
+      .catch((err) => {
+        console.warn("Fallo al cargar config.json:", err);
+        message.innerHTML = "Cargando configuración local...";
+
+        LocalStorageManager.loadConfig((error, savedConfig) => {
+          if (error) {
+            message.innerHTML = "Sin conexión y sin configuración local";
+            console.error(error);
+          } else {
+            ajustarHoraConConfig(savedConfig);
+          }
+        });
+      });
+  } else {
+    console.log("Modo offline: usando configuración guardada");
+
+    message.innerHTML = "Sin conexión, usando configuración local...";
+
+    LocalStorageManager.loadConfig((error, savedConfig) => {
+      if (error) {
+        message.innerHTML = "No se pudo cargar configuración local";
+        console.error(error);
+      } else {
+        ajustarHoraConConfig(savedConfig);
+      }
+    });
+  }
+
+  // Cierre automático
+  setTimeout(function () {
+    console.log("Cerrando la aplicación...");
+    tizen.application.getCurrentApplication().exit();
+  }, 10000);
+});
